@@ -2,6 +2,11 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from db_connection import *
 
+def get_user_id(user_name):
+    user = db.execute('select user_id from ecommerce.users where username = \'{}\''.format(user_name))
+    data = user.fetchone()[0]
+    return data
+
 def is_valid_user(username,password):
   user = db.execute('select * from ecommerce.users where username = \'{}\' and password=\'{}\''.format(username,password))
   data =user.fetchone()

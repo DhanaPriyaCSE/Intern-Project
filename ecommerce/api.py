@@ -17,9 +17,8 @@ def login():
         if user is None:
             return ("Invalid Username Password")
         else:
-            session[status] = True
-            session[user_id] = user.get_user_id(user_name)
-        return ("Sucessfully Logged in")
+            # session[user_id] = get_user_id(user_name)
+            return ("Sucessfully Logged in")
 
 @app.route('/categories', methods=['GET'])
 def display_categories():
@@ -45,7 +44,7 @@ def view_cart_product(user_id):
 @app.route('/cart/<user_id>', methods=['POST'])
 def add_product_to_cart(user_id):
     product_id=request.form['product_id']
-    quantity = request.form['quant
+    quantity = request.form['quantity']
     cart_id = get_cart_id(user_id)
     # if user_id in session:
     add_to_cart = add_to_cart_products(cart_id, product_id, quantity)
@@ -81,6 +80,11 @@ def delete_product(user_id):
     else:
         return 'Failed to delete'
 
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    return 'ur successfully Logged out'
 
 
 
