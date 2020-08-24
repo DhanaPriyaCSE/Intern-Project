@@ -3,7 +3,7 @@ from db_connection import *
 class Cart(Base):
     __tablename__ = 'carts'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_ke=True)
     user_id = Column(Integer, ForeignKey('users.user_id'))
 
     def __init__(self, _user_id):
@@ -13,6 +13,8 @@ class Cart(Base):
       cart_id =db.execute("select id from ecommerce.cart where  user_id=\'{}\'".format(self._user_id))
       return  cart_id.fetchone()[0]
 
+    def new_cart(self):
+        db.execute("insert into ecommerce.cart (user_id) values user_id=\'{}\' ".format(self._user_id))
 
 class CartProduct(Base):
     __tablename__ = 'cart_products'

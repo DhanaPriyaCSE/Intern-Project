@@ -61,14 +61,14 @@ def add_product_to_cart(user_id):
     product_id=request.form['product_id']
     quantity = request.form['quantity']
     cart_id = Cart(user_id).get_cart_id()
-    # if user_id in session:
-    add_to_cart = CartProduct(cart_id, product_id).add_to_cart_products(quantity)
-    if add_to_cart is True:
-        return "product added to ur cart"
+    if user_id in session:
+        add_to_cart = CartProduct(cart_id, product_id).add_to_cart_products(quantity)
+        if add_to_cart is True:
+            return "product added to ur cart"
+        else:
+            return "failed to add"
     else:
-        return "failed to add"
-    # else:
-    #     return "please login to add products"
+        return "please login to add products"
 
 
 @app.route('/cart/<user_id>', methods=['PUT'])
