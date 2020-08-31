@@ -1,0 +1,5 @@
+.product {
+    display: inline-block;
+    justify-content: wrap;
+    max-width: 45%;
+}

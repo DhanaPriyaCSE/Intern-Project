@@ -3,18 +3,23 @@ from db_connection import *
 class Cart(Base):
     __tablename__ = 'carts'
 
-    id = Column(Integer, primary_ke=True)
+    id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.user_id'))
 
     def __init__(self, _user_id):
         self._user_id = _user_id
     
     def get_cart_id(self):
+
       cart_id =db.execute("select id from ecommerce.cart where  user_id=\'{}\'".format(self._user_id))
+      if cart_id is None:
+          cart_id=new_cart()
       return  cart_id.fetchone()[0]
 
     def new_cart(self):
-        db.execute("insert into ecommerce.cart (user_id) values user_id=\'{}\' ".format(self._user_id))
+        new_cart=db.execute("insert into ecommerce.cart (user_id) values user_id=\'{}\' ".format(self._user_id))
+        new_cart_id=db.execute("select max(id) from ecommerce.cart ")
+        return new_cart_id.fetchone()[0]
 
 class CartProduct(Base):
     __tablename__ = 'cart_products'

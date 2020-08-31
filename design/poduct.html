@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Sample</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="home.css">
+    <link href="product.css" rel="stylesheet">
+    <link href="cartstyle.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <div class="overlay">
+            <nav>
+                <h2>PRIYA</h2>
+                <ul>
+                    <li> <a href="poduct.html">Home</a> </li>
+                    <li> <a href="#..">About</a> </li>
+                    <li class="cart">
+                        <a href="cartpage.html">
+                            <i class="fa fa-shopping-cart"></i> Cart <span>0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="image">
+            <img src="images/Book.svg" width="150px" height="150px" alt="">
+            <h1>Python</h1>
+            <p>Rs.1400</p>
+            <i class="fa fa-cart-plus add-cart cart1" aria-hidden="true"></i><a href="#">Add Cart</a>
+            <input type="hidden" value="15">
+        </div>
+        <div class="image">
+            <img src="images/Book.svg" width="150px" height="150px" alt="">
+            <h1>JavaScript</h1>
+            <p>Rs.1600</p>
+            <i class="fa fa-cart-plus add-cart cart1" aria-hidden="true"></i><a href="#">Add Cart</a>
+            <input type="hidden" value="15">
+        </div>
+        <div class="image">
+            <img src="images/Book.svg" width="150px" height="150px" alt="">
+            <h1>java</h1>
+            <p>Rs.2000</p>
+            <i class="fa fa-cart-plus add-cart cart1" aria-hidden="true"></i><a href="#" class="add-cart">Add Cart</a>
+            <input type="hidden" value="15">
+        </div>
+
+    </div>
+    <div id="cat-product"></div>
+    <div id="prod"></div>
+
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoryid = urlParams.get('category_id')
+        console.log(categoryid);
+
+
+        fetch(`http://127.0.0.1:5000/categories/${categoryid}/products`)
+            .then(response => {
+                return response.json();
+            }).then(data => {
+                console.log(data);
+
+                const html = data.map(product => {
+                    console.log(data);
+                    console.log(product);
+                    for (i = 0; i >= len(data); i++) {
+                        let prod = {
+                            product_name: data['name'],
+                            product_id: data['id'],
+                            price: data['price'],
+                            description: data['description']
+                        }
+                    }
+                    localStorage.setItem('product', JSON.stringify(data));
+                    return ` 
+                    <div class="container">
+                        <div class="image">
+                            <img src="images/Book.svg" width="150px" height="150px" alt="">
+                            <p id="${product.id}"  class="fa fa-cart-plus add-cart cart1"> Name: ${product.name}</p>
+                            <p >Price: ${product.price}</p>
+                            <!-- <i class="fa fa-cart-plus add-cart cart1" aria-hidden="true"></i><a href="#" onclick='product(\"${product.id}\")' >Add Cart</a>
+                             -->
+                            <button class="btn"><i class="fa fa-cart-plus add-cart cart1" onclick='addProductToart(\"${product.id}\")'></i> Add to cart</button>
+                            <input type="hidden" value="15">
+                            
+                            </div>
+                        </div>
+                            `
+                }).join("");
+                // console.log(html);
+                document.querySelector('#cat-product').insertAdjacentHTML('afterend', html);
+            }).catch(error => {
+                console.log(error);
+            });
+
+        let product = localStorage.getItem('products');
+        console.log(product)
+
+        /***
+                function product(product_id) {
+                    var productid = product_id
+                    console.log(productid)
+                    fetch(`http://127.0.0.1:5000/product/${productid}`)
+                        .then(response => {
+                            return response.json();
+                        }).then(data => {
+                            console.log(data);
+                            const html = data.map(product => {
+                                return ` 
+                            <div class="category">
+                            <p> <img src="images/authentication.svg" alt="Category Image" width="100px" height="100px"> </p>
+                            </br><hr>
+                            <p id="${product.id}" onclick='showproduct(\"${product.id}\")'> Name: ${product.name}</p>
+                            <p >Description: ${product.price}</p>
+                            <p >Description: ${product.quantity}</p>
+                            </div>
+                            `
+                            }).join("");
+                            // console.log(html);
+                            document.querySelector('#prod').insertAdjacentHTML('afterbegin', html);
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                }
+
+                ***/
+
+
+
+        async function postData(url = '', data = {}) {
+            console.log("hello");
+            const response = await fetch(url, {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            return response.json();
+        }
+
+        function addProductToart(productid) {
+            let userid = localStorage.getItem(user.userid)
+            console.log(userid);
+            postData(`'http://127.0.0.1:5000/cart/${userid}'`, {
+                    product_id: productid,
+                    quantity: 1
+                })
+                .then(data => {
+                    console.log(data);
+
+                    alert(data['message'])
+                        //loggeduser(data);
+                })
+        }
+
+
+
+
+
+        // <input type="number" id="qunatity"> <button class="btn"><i class="fa fa-update" onclick='update(\"${product.id}\")'></i>Update</button>
+        //     <button class="btn"><i class="fa fa-trash" onclick='deleteProduct(\"${product.id}\")'></i> delete</button>
+    </script>
+
+</body>
+
+</html>

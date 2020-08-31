@@ -14,11 +14,6 @@ def get_all_products(category_id):
     result = [dict(row) for row in products.fetchall()]
     return result
 
-# def get_product_details(product_id):
-#         product = db.execute("select * from ecommerce.products where  id=\'{}\'".format(product_id))
-#         result = [dict(row) for row in product.fetchall()]
-#         return result
-
 def get_cart_products(cart_id):
     # cart_id=db.execute("select id from ecommerce.cart where  user_id=\'{}\'".format(user_id))
     #cart=db.execute("select * from ecommerce.cart_product where cart_id=\'{}\'".format("select id from ecommerce.cart where  user_id=\'{}\'".format(user_id)))
@@ -28,13 +23,6 @@ def get_cart_products(cart_id):
     for product in range(len(products)):
         products_in_cart.append(get_cart_product_details(products[product]['product_id'],cart_id))
     return products_in_cart
-
-# def get_cart_product_details(product_id, cart_id):
-#     cart_products = db.execute("select id from ecommerce.products where id=\'{}\'".format(product_id))
-#     for row in cart_products:
-#         product_details = Product(row.id).get_product_details()
-#         product_details['quantity'] = CartProduct(cart_id, row.id).get_cart_product_quantity()
-#     return product_details
 
 
 def get_cart_product_details(product_id, cart_id):
