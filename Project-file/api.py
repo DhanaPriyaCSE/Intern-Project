@@ -25,24 +25,15 @@ def login():
         req_data = request.get_json()
         user_name = req_data['user_name']
         password = req_data['password']
-        # user_name = request.form['user_name']
-        # password = request.form['password']
         # h_pwd = bcrypt.generate_password_hash(password).decode('utf-8')
         user=User(user_name, password)
-        # user_id = User(user_name, password).get_user_id()
+
         print(user,user_name,password)
         if user.is_valid_user()==True:
-            # session[user_id] = user_id
-            # flash("Sucessfully Logged in")
             return jsonify({'status': '200', 'user_id': user.get_user_id()})
-            # return render_template("category.html")
-
         else:
-            # flash("Invalid Username Password")
             return jsonify({'status': '401'})
-            # return render_template("login.html",message="Invalid Username Password")
-        
-
+            
 @cross_origin
 @app.route('/register', methods=['POST'])
 def signup():
@@ -136,19 +127,14 @@ def delete_product(user_id):
     if result is True:
         return jsonify({'status': '200', 'message':'Product from ur cart is deleted'  })
     else:
-        return jsonify({'status': '200', 'message':'Failed to delete' })
+        return jsonify({'status': '401', 'message':'Failed to delete' })
 
 
 @cross_origin
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    return 'You are successfully Logged out'
-
-
-
-
-
+    return jsonify({'status': '200', 'message':'You are successfully Logged out' })
 
 
 

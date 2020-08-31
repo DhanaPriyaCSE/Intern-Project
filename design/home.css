@@ -69,9 +69,10 @@ h2 {
 
 .container,
 .products-container,
-.products {
+.products,
+.cat-product {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     margin-top: 50px;
     padding-bottom: 100px;
 }
@@ -122,4 +123,11 @@ main,
 nav,
 section {
     display: flex !important;
+}
+
+.cat-product {
+    margin: 0 10px;
+    width: 250px !important;
+    align-items: center;
+    display: flex;
 }

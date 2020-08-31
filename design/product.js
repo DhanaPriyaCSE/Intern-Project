@@ -15,14 +15,17 @@ fetch(`http://127.0.0.1:5000/categories/${categoryid}/products`)
                 <div class="container">
                     <div class="image">
                         <img src="images/Book.svg" width="150px" height="150px" alt="">
-                        <p id="${product.id}"  class="fa fa-cart-plus add-cart cart1"> Name: ${product.name}</p>
-                        <p >Price: ${product.price}</p>
-                         <i class="fa fa-cart-plus add-cart cart1" aria-hidden="true"></i><a href="#" onclick='product(\"${product.id}\")' >Add Cart</a>
                         
-                      <button class="btn"><i class="fa fa-cart-plus add-cart cart1" onclick='product(\"${product.id}\")'></i> Add to cart</button>
+                        <h3 id="${product.id}"  class="fa fa-cart-plus add-cart cart1"> Name: ${product.name}</h3>
+                        
+                        
+                        <p >Price: ${product.price}</p>
+                         <i class="fa fa-cart-plus add-cart cart1" aria-hidden="true"></i><a href="#" onclick='addProductToart(\"${product.id}\")' >Add Cart</a>
+                        
+                      //<button class="btn"><i class="fa fa-cart-plus add-cart cart1" onclick='addProductToart(\"${product.id}\")'></i> Add to cart</button>
                         <input type="hidden" value="15">
                         
-                        </div>
+                        </div> 
                     </div>
                         `
         }).join("");
@@ -66,7 +69,7 @@ async function postData(url = '', data = {}) {
     return response.json();
 }
 
-function addProductToart(productid, userid) {
+function addProductToart(productid) {
     let user = userid
     postData(`http://127.0.0.1:5000/cart/${user}`, {
             product_id: productid,
@@ -76,7 +79,8 @@ function addProductToart(productid, userid) {
             console.log(data);
             if (data['status'] == 200) {
                 alert(data['message'])
-                window.location.href = `"http://127.0.0.1:5500/design/cartpage.html?product_id=${productid}"`
+                window.location.href = `
+                cartpage.html?product_id=${userid}`
             }
             //loggeduser(data);
         })
