@@ -59,126 +59,16 @@
 
     </div>
     <div id="cat-product"></div>
+    <div id="cart">
+        <h3>Products to visit</h3>
+
+    </div>
+
     <div id="prod"></div>
 
 
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const categoryid = urlParams.get('category_id')
-        console.log(categoryid);
 
-
-        fetch(`http://127.0.0.1:5000/categories/${categoryid}/products`)
-            .then(response => {
-                return response.json();
-            }).then(data => {
-                console.log(data);
-
-                const html = data.map(product => {
-                    console.log(data);
-                    console.log(product);
-                    for (i = 0; i >= len(data); i++) {
-                        let prod = {
-                            product_name: data['name'],
-                            product_id: data['id'],
-                            price: data['price'],
-                            description: data['description']
-                        }
-                    }
-                    localStorage.setItem('product', JSON.stringify(data));
-                    return ` 
-                    <div class="container">
-                        <div class="image">
-                            <img src="images/Book.svg" width="150px" height="150px" alt="">
-                            <p id="${product.id}"  class="fa fa-cart-plus add-cart cart1"> Name: ${product.name}</p>
-                            <p >Price: ${product.price}</p>
-                            <!-- <i class="fa fa-cart-plus add-cart cart1" aria-hidden="true"></i><a href="#" onclick='product(\"${product.id}\")' >Add Cart</a>
-                             -->
-                            <button class="btn"><i class="fa fa-cart-plus add-cart cart1" onclick='addProductToart(\"${product.id}\")'></i> Add to cart</button>
-                            <input type="hidden" value="15">
-                            
-                            </div>
-                        </div>
-                            `
-                }).join("");
-                // console.log(html);
-                document.querySelector('#cat-product').insertAdjacentHTML('afterend', html);
-            }).catch(error => {
-                console.log(error);
-            });
-
-        let product = localStorage.getItem('products');
-        console.log(product)
-
-        /***
-                function product(product_id) {
-                    var productid = product_id
-                    console.log(productid)
-                    fetch(`http://127.0.0.1:5000/product/${productid}`)
-                        .then(response => {
-                            return response.json();
-                        }).then(data => {
-                            console.log(data);
-                            const html = data.map(product => {
-                                return ` 
-                            <div class="category">
-                            <p> <img src="images/authentication.svg" alt="Category Image" width="100px" height="100px"> </p>
-                            </br><hr>
-                            <p id="${product.id}" onclick='showproduct(\"${product.id}\")'> Name: ${product.name}</p>
-                            <p >Description: ${product.price}</p>
-                            <p >Description: ${product.quantity}</p>
-                            </div>
-                            `
-                            }).join("");
-                            // console.log(html);
-                            document.querySelector('#prod').insertAdjacentHTML('afterbegin', html);
-                        }).catch(error => {
-                            console.log(error);
-                        });
-                }
-
-                ***/
-
-
-
-        async function postData(url = '', data = {}) {
-            console.log("hello");
-            const response = await fetch(url, {
-                method: 'POST',
-                mode: 'cors',
-                cache: 'no-cache',
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-            return response.json();
-        }
-
-        function addProductToart(productid) {
-            let userid = localStorage.getItem(user.userid)
-            console.log(userid);
-            postData(`'http://127.0.0.1:5000/cart/${userid}'`, {
-                    product_id: productid,
-                    quantity: 1
-                })
-                .then(data => {
-                    console.log(data);
-
-                    alert(data['message'])
-                        //loggeduser(data);
-                })
-        }
-
-
-
-
-
-        // <input type="number" id="qunatity"> <button class="btn"><i class="fa fa-update" onclick='update(\"${product.id}\")'></i>Update</button>
-        //     <button class="btn"><i class="fa fa-trash" onclick='deleteProduct(\"${product.id}\")'></i> delete</button>
-    </script>
-
+    <script src="product.js"></script>
 </body>
 
 </html>

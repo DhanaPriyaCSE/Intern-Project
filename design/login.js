@@ -27,11 +27,8 @@ myForm.addEventListener('submit', function(e) {
         })
         .then(data => {
             console.log(data, name);
-            let userdata = {
-                userid: data['user_id'],
-                user_name: name
-            }
-            let userdetails = localStorage.setItem('user', JSON.stringify(userdata))
+            let userdata = data['user_id'];
+            let userdetails = localStorage.setItem('user', data['user_id'])
             console.log(userdata, userdetails)
             if (data['status'] == 200) {
                 alert("you are sucessfully logged in")

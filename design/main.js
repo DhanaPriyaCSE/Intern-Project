@@ -1,7 +1,7 @@
 let carts = document.querySelectorAll('.add-cart');
 
-let products = [{
 
+let products = [{
         name: "Book",
         description: "books",
         price: 1200,
